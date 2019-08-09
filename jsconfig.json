@@ -1,6 +1,6 @@
 {
-    "rootDir": "client/src",
+    "rootDir": "./",
     "compilerOptions": {
-        "baseUrl": "./"
+        "baseUrl": "src"
     }
 }

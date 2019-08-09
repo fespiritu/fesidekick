@@ -1,7 +1,6 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var sql = require("mssql");
-var mySqls = require('./dml');
 
 var app = express();
 
@@ -31,7 +30,7 @@ var dbConfig = {
     database: 'Epson'
 };
 
-var baseApiUrl = "/api/accessmodel";
+var baseApiUrl = "/api/user";
 
 var executeQuery = function(res, query) {
     console.log('executing ', query);
@@ -48,7 +47,7 @@ var executeQuery = function(res, query) {
                     console.log("Error while querying database: " + err);
                     res.send(err);
                 } else {
-                    res.end(JSON.stringify(recordsets.recordset));
+                    res.end(JSON.stringify(recordsets));
                 }
                 sql.close();
             });
@@ -57,41 +56,13 @@ var executeQuery = function(res, query) {
 };
 
 // GET
-app.get(baseApiUrl + '/tablelist', (req, res) => {
-    const query = mySqls.getTableSql(); // "select * from [user]";
+app.get(baseApiUrl, (req, res) => {
+    const query = "select * from [user]";
     executeQuery(res, query);
 
     /* returns
     {"recordsets":[[{"Id":1,"Name":"Freddie","Email":"f@yahoo.com","Password":"hello@3"},{"Id":2,"Name":"Steve Urkel","Email":"steveurkel@hotmail.com","Password":"svc@1"}]],"recordset":[{"Id":1,"Name":"Freddie","Email":"f@yahoo.com","Password":"hello@3"},{"Id":2,"Name":"Steve Urkel","Email":"steveurkel@hotmail.com","Password":"svc@1"}],"output":{},"rowsAffected":[2]}
     */
-});
-
-
-// GET
-app.get(baseApiUrl, (req, res) => {
-    const { tablenamewithschema } = req.query;
-    console.log('req.query: ', req.query);
-    const query = mySqls.getTableData(tablenamewithschema); // "select * from [user]";
-    executeQuery(res, query);
-
-});
-
-// GET
-app.get(baseApiUrl + '/fieldprops', (req, res) => {
-    const { tablenameonly } = req.body;
-    console.log('req.body: ', req.body);
-    const query = mySqls.getFieldPropertiesSql(tablenameonly); // "select * from [user]";
-    executeQuery(res, query);
-
-});
-
-// GET
-app.get(baseApiUrl + '/foreignkeys', (req, res) => {
-    const { tablenameonly } = req.body;
-    console.log('req.body: ', req.body);
-    const query = mySqls.getForeignKeyTableInfoSql(tablenameonly); // "select * from [user]";
-    executeQuery(res, query);
-
 });
 
 // POST

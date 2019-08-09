@@ -1,12 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import AdminDashboard from './components/Admin/dashboard';
+import DashboardManager from './components/Admin/dashboardManager';
 
 function App() {
   return (
     <div className="App">
-      <AdminDashboard />
+      <DashboardManager />
     </div>
   );
 }
