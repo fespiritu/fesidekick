@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import getApiTableList, { getTableData } from "components/services/dashboardService";
+import getApiTableList from "components/services/dashboardService";
 import MyGrid from 'components/common/MyGrid';
+import MyGridHoc from './../common/MyGridHoc';
 
 class DashboardManager extends Component {
     constructor(props) {
@@ -17,25 +18,25 @@ class DashboardManager extends Component {
     }
 
     componentDidMount() {
-        // getApiTableList(this.parseData);
-        const params = {
-            tablenamewithschema: 'dbo.sections'
-        };
+        getApiTableList(this.parseData);
+        // const params = {
+        //     tablenamewithschema: 'dbo.sections'
+        // };
 
-        getTableData(params, this.parseTableData);
+       //  getTableData(params, this.parseTableData);
     }
     parseTableData(data) {
-        console.log('parseTableData data: ', data);
+        console.log('parseTableData data: ');
     }
     parseData(data) {
-        console.log('In parseData data: ', data);
+       
         if (data && data.length > 0) {
             const theData = data.map(row => ({
             name: row.name
             }));
-            console.log('In parseData theData: ', theData);
+            // console.log('In parseData theData: ', theData);
             this.setState({ data: theData }, 
-                () => console.log('this.state:', this.state));
+                () => console.log('this.state:'));
         } else {
             this.setState({ data: [] });
         }
@@ -45,12 +46,13 @@ class DashboardManager extends Component {
       
       
     render() {
-        const { data } = this.state;
-        const hasData = data && data.length > 0;
-        console.log('render data: ', data);
+        // const { data } = this.state;
+        // const hasData = data && data.length > 0;
+        //console.log('render data: ', data);
         return (
-            <div>
-                <MyGrid
+            <div id="myGrid">
+                <MyGridHoc
+                    component={MyGrid}
                     title={'Database Tables'}
                     state={this.state}
                     setStateCallback={this.setState}

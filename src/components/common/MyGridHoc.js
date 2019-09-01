@@ -5,21 +5,22 @@ const MyGridHoc = (props) => {
         component: Component,
         ...rest
     } = props;
-    const {
-        myColumns
-    } = rest;
+    // const {
+    //     myColumns
+    // } = rest;
 
-    const columns = myColumns.map(item => ({
-        title: item.title,
-        field: item.field,
-        type: item.type,
-        lookup: item.lookup
-    }));
-    const state = {
-        columns
-    }
+    // const columns = myColumns ? myColumns.map(item => ({
+    //     title: item.title,
+    //     field: item.field,
+    //     type: item.type,
+    //     lookup: item.lookup
+    // })) : rest.state.columns;
+    // const state = {
+    //     columns
+    // }
     return(
-        <Component {...rest} state={state} />
+        // <Component {...rest} state={state} />
+        <Component {...rest} />
     )
 };
 

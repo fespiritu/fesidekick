@@ -35,6 +35,7 @@ var baseApiUrl = "/api/accessmodel";
 
 var executeQuery = function(res, query) {
     console.log('executing ', query);
+    sql.close();
     sql.connect(dbConfig, (err) => {
         if (err){
             console.log("Error while connecting to database: " + err);
