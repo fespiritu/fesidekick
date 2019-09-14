@@ -22,19 +22,31 @@ const params = {
 //   }
 // }
 export default function getApiTableList(callback) {
-   
+   let source = axios.CancelToken.source();
+
+   console.log('source.token 1: ', source.token);
+   console.log('source.token 2: ', source.token);
     let url = `/accessmodel/tablelist`;
-  
-    axios.get(url)
+    console.log('parseTableData getApiTableList: ');
+    axios.get(url, {
+      cancelToken: source.token
+    })
     .then(function (response) {
       // handle success
-      console.log(response);
+      console.log('parseTableData response: ', response);
       callback(response.data);
     })
     .catch(function (error) {
       // handle error
-      console.log(error);
+      if (axios.isCancel(error)) {
+        console.log('Axios request cancelled.');
+      } else {
+        console.log('Actual error');
+      }
+      
     })
+
+    source.cancel('Goodbye!');
 }
 
 export function getTableData(params, callback) {

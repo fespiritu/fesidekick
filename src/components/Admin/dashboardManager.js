@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import getApiTableList from "components/services/dashboardService";
 import MyGrid from 'components/common/MyGrid';
 import MyGridHoc from './../common/MyGridHoc';
+// import oandaInstrumentDD from 'person-widget';
+import OandaInstrumentDD from 'react-fx-instrument-dd';
 
 class DashboardManager extends Component {
     constructor(props) {
@@ -12,7 +14,7 @@ class DashboardManager extends Component {
             ],
             data: [],
         };
-
+        this.onChangeEvent = this.onChangeEvent.bind(this);
         this.parseData = this.parseData.bind(this);
         this.parseTableData = this.parseTableData.bind(this);
     }
@@ -43,14 +45,20 @@ class DashboardManager extends Component {
     
     }
       
-      
+    onChangeEvent = () => {
+        alert('onChangeEvent');
+    }
       
     render() {
         // const { data } = this.state;
         // const hasData = data && data.length > 0;
         //console.log('render data: ', data);
+       const instrument = 'NZD_USD';
+
         return (
             <div id="myGrid">
+                {/* <ExampleComponent text='Hello Ferdinand'/> */}
+                <OandaInstrumentDD onChangeEvent={this.onChangeEvent} instrument={instrument} />
                 <MyGridHoc
                     component={MyGrid}
                     title={'Database Tables'}
